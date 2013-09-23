@@ -1,0 +1,18 @@
+1.install qemu-kvm on CentOS6:
+yum install @virtualization*
+yum install bridge-utils
+
+2.set NETWORK:
+eth0: /etc/sysconfig/network-scripts/ifcfg-eth0
+add:BRIDGE=br0
+remove:BOOTPROTO
+
+br0: /etc/sysconfig/network-scripts/ifcfg-br0
+DEVICE="br0"
+TYPE="Bridge"
+BOOTPROTO="static"
+
+3.create VM:
+virt-install --name freedos --ram 128 --disk /home/linux.iso,size=2 --network bridge=br0 \
+--vcpus=1 --os-type=linux --cdrom=/home/fd11src.iso --graphics vnc,listen=0.0.0.0,port=5901
+
